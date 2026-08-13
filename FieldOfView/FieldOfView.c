@@ -8,8 +8,8 @@ Vision range and center point are calculated on this; for example, if given
 an array of 25 elements, it will be calculated as a 5x5 area, vision range 2, 
 vision calculated from 2, 2.
 
-Elements of the array indicate opacity; looking through an element costs 1 + opacity.
-For opaque elements, just use a number higher than the vision range.
+Elements of the array indicate transparency; a tile with value 0 is opaque, any other 
+value is transparent.
 */
 
 #include <stdio.h>

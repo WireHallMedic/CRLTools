@@ -21,6 +21,7 @@ def print_char_list(char_list, width):
       for x in range(width):
          print("" + char_list[getIndex(x, y, width)], end = "");
       print()
+   print()
 
 char_list = [
          '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', 
