@@ -2,9 +2,11 @@
 
 # cd into each folder and trigger the makefile
 
+echo "Making AStar"
 cd AStar
 ./makefile
 
+echo "Making FieldOfView"
 cd ..
 cd FieldOfView
 ./makefile
