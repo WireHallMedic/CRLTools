@@ -138,6 +138,7 @@ int isInBounds(int x, int y, int mapWidth)
           y < mapWidth;
 }
 
+// not an inline function as we call the inputs different things
 int cartesianToIndex(int x, int y, int mapWidth)
 {
    return x + (y * mapWidth);
