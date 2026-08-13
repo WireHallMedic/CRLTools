@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# cd into each folder and trigger the makefile
+
+cd AStar
+./makefile
+
+cd ..
+cd FieldOfView
+./makefile
