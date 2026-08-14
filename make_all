@@ -10,3 +10,8 @@ echo "Making FieldOfView"
 cd ..
 cd FieldOfView
 ./makefile
+
+echo "Making Noise"
+cd ..
+cd Noise
+./makefile
