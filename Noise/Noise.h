@@ -7,6 +7,11 @@
 
 double interpolateLinear(double p1, double p2, double xOff);
 double interpolateCosine(double p1, double p2, double xOff);
-double sanatizeIndex(double val);
-double reduceInput(double val);
+double normalizeIndex(double val);
+double reduceIndex(double val);
 void initialize(long seed);
+double getSpecificNoiseValue(double xOff, double yOff, double arr[FIELD_SIZE][FIELD_SIZE]);
+
+// export functions
+double getNoiseValue(double xOff, double yOff);
+double getChoirValue(double xOff, double yOff);
