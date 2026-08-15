@@ -1,11 +1,23 @@
-
-#include <math.h>
 #include "Noise.h"
-#define PI 3.14159265358979323846
 
 double primaryArray[FIELD_SIZE][FIELD_SIZE];
 double secondaryArray[FIELD_SIZE][FIELD_SIZE];
 double tertiaryArray[FIELD_SIZE][FIELD_SIZE];
+
+void initialize(long seed)
+{
+   if(seed == 0)
+      srand(time(NULL));
+   else
+      srand(seed);
+   for(int x = 0; x < FIELD_SIZE; x++)
+   for(int y = 0; y < FIELD_SIZE; y++)
+   {
+      primaryArray[x][y] = (double)rand() / RAND_MAX;
+      secondaryArray[x][y] = (double)rand() / RAND_MAX;
+      tertiaryArray[x][y] = (double)rand() / RAND_MAX;
+   }
+}
 
 // returns the value of a point between two values.  For example, if the passed values are 2 and 4, and the xOffset
 // is .5 (halfway between the two), this will return 3.
@@ -23,6 +35,7 @@ double interpolateCosine(double p1, double p2, double xOff)
    return interpolateLinear(p1, p2, xOff);
 }
 
+// bind input to the size of the array
 double sanatizeIndex(double val)
 {
    // negative
