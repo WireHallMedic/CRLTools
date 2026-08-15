@@ -1,8 +1,8 @@
 #include "Noise.h"
 
-double primaryArray[FIELD_SIZE][FIELD_SIZE];
-double secondaryArray[FIELD_SIZE][FIELD_SIZE];
-double tertiaryArray[FIELD_SIZE][FIELD_SIZE];
+double valArray[OCTAVES][FIELD_SIZE][FIELD_SIZE];
+double weight[OCTAVES];
+double persistenceSum = 0.0;
 
 __declspec(dllexport) void initialize(long seed)
 {
@@ -10,28 +10,24 @@ __declspec(dllexport) void initialize(long seed)
       srand(time(NULL));
    else
       srand(seed);
+   for(int i = 0; i < OCTAVES; i++)
    for(int x = 0; x < FIELD_SIZE; x++)
    for(int y = 0; y < FIELD_SIZE; y++)
    {
-      primaryArray[x][y] = (double)rand() / (double)RAND_MAX;
-      secondaryArray[x][y] = (double)rand() / (double)RAND_MAX;
-      tertiaryArray[x][y] = (double)rand() / (double)RAND_MAX;
-      
+      valArray[i][x][y] = (double)rand() / (double)RAND_MAX;      
    }
-}
-
-__declspec(dllexport) int validateArrays()
-{
-   for(int x = 0; x < FIELD_SIZE; x++)
-   for(int y = 0; y < FIELD_SIZE; y++)
+   weight[0] = 1.0;
+   double persistenceSum = 1.0;
+   
+   // weight each octave
+   for(int i = 1; i < OCTAVES; i++)
    {
-      if(primaryArray[x][y] < 0.0 || primaryArray[x][y] > 1.0)
-         return 1;
-      if(secondaryArray[x][y] < 0.0 || secondaryArray[x][y] > 1.0)
-         return 1;
-      if(tertiaryArray[x][y] < 0.0 || tertiaryArray[x][y] > 1.0)
-         return 1;
-      return 0;
+      weight[i] = weight[i - 1] * PERSISTENCE;
+      persistenceSum += weight[i];
+   }
+   for(int i = 0; i < OCTAVES; i++)
+   {
+      weight[i] = weight[i] / persistenceSum;
    }
 }
 
@@ -115,14 +111,18 @@ double getSpecificNoiseValue(double xOff, double yOff, double arr[FIELD_SIZE][FI
 // determine the value at a point in primary array
 __declspec(dllexport) double getNoiseValue(double xOff, double yOff)
 {
-   return getSpecificNoiseValue(xOff, yOff, primaryArray);
+   return getSpecificNoiseValue(xOff, yOff, valArray[0]);
 }
 
 // determine the value at a point in stacked array
 __declspec(dllexport) double getChoirValue(double xOff, double yOff)
 {
-   double val = getSpecificNoiseValue(xOff, yOff, primaryArray);
-   val += getSpecificNoiseValue(xOff, yOff, primaryArray) * 2;
-   val += getSpecificNoiseValue(xOff, yOff, primaryArray) * 4;
-   return val / 7.0;
+   double val = 0.0;
+   double frequency = 1.0;
+   for(int i = 0; i < OCTAVES; i++)
+   {
+      val += getSpecificNoiseValue(xOff / frequency, yOff / frequency, valArray[i]) * weight[i];
+      frequency *= FREQUENCY_MULTIPLIER;
+   }
+   return val;
 }
