@@ -9,9 +9,9 @@ double interpolateLinear(double p1, double p2, double xOff);
 double interpolateCosine(double p1, double p2, double xOff);
 double normalizeIndex(double val);
 double reduceIndex(double val);
-void initialize(long seed);
 double getSpecificNoiseValue(double xOff, double yOff, double arr[FIELD_SIZE][FIELD_SIZE]);
 
 // export functions
+void initialize(long seed);
 double getNoiseValue(double xOff, double yOff);
 double getChoirValue(double xOff, double yOff);
