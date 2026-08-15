@@ -1,5 +1,6 @@
 
 #include <math.h>
+#include "Noise.h"
 #define PI 3.14159265358979323846
 
 // returns the value of a point between two values.  For example, if the passed values are 2 and 4, and the xOffset
