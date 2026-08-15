@@ -15,5 +15,6 @@ double reduceIndex(double val);
 double getSpecificNoiseValue(double xOff, double yOff, double arr[FIELD_SIZE][FIELD_SIZE]);
 
 // export functions
+void initialize(long seed);
 double getNoiseValue(double xOff, double yOff);
 double getChoirValue(double xOff, double yOff);

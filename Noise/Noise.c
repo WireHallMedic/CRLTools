@@ -67,7 +67,7 @@ double normalizeIndex(double val)
    return val;
 }
 
-// input must be positive
+// restrict index to range
 double reduceIndex(double val)
 {
    if(val > (double)FIELD_SIZE)
