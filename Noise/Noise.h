@@ -13,5 +13,5 @@ double getSpecificNoiseValue(double xOff, double yOff, double arr[FIELD_SIZE][FI
 
 // export functions
 void initialize(long seed);
-double getNoiseValue(double xOff, double yOff);
-double getChoirValue(double xOff, double yOff);
+__declspec(dllexport) double getNoiseValue(double xOff, double yOff);
+__declspec(dllexport) double getChoirValue(double xOff, double yOff);

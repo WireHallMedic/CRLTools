@@ -5,8 +5,11 @@ import tkinter
 
 noise = cdll.LoadLibrary("./Noise.dll")
 noise.initialize.argtypes = [c_long]
+noise.initialize.restype = c_int
 noise.getNoiseValue.argtypes = [c_double, c_double]
+noise.getNoiseValue.restype = c_double
 noise.getChoirValue.argtypes = [c_double, c_double]
+noise.getChoirValue.restype = c_double
 
 class TestNoise(tkinter.Frame):
    
@@ -20,6 +23,10 @@ class TestNoise(tkinter.Frame):
       noise.initialize(123456789)
       if noise.validateArrays() == 1:
          print("Bad arrays");
+         exit(0);
+      else:
+         print(noise.validateArrays());
+      print(type(noise.getNoiseValue(1.5, 1.5)))
       # make the canvas
       self.canvas = tkinter.Canvas(master, width = self.displaySize + 200, height = self.displaySize + 100)
       self.canvas.pack()
