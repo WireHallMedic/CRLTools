@@ -15,3 +15,8 @@ echo "Making Noise"
 cd ..
 cd Noise
 ./makefile
+
+echo "Making SpiralSearch"
+cd ..
+cd SpiralSearch
+./makefile
