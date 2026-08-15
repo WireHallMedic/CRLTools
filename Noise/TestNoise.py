@@ -18,19 +18,18 @@ class TestNoise(tkinter.Frame):
       super(TestNoise, self).__init__(master)
       master.title("Noise Test")
       
-      self.displaySize = 500
+      self.displaySize = 1000
+      self.half_display_size = self.displaySize // 2
       
       noise.initialize(123456789)
-      if noise.validateArrays() == 1:
-         print("Bad arrays");
-         exit(0);
-      else:
-         print(noise.validateArrays());
-      print(type(noise.getNoiseValue(1.5, 1.5)))
+      
       # make the canvas
-      self.canvas = tkinter.Canvas(master, width = self.displaySize + 200, height = self.displaySize + 100)
+      self.canvas = tkinter.Canvas(master, width = self.displaySize, height = self.half_display_size)
       self.canvas.pack()
       self.paint()
+      
+      # start the main thread for the canvas
+      master.mainloop()
 
    def getGreyString(self, val):
       """
@@ -48,17 +47,17 @@ class TestNoise(tkinter.Frame):
       Drawn at *2 size
       """
       # pixel setting loop
-      for x in range(self.displaySize // 2):
-         for y in range(self.displaySize // 2):
+      for x in range(self.half_display_size // 2):
+         for y in range(self.half_display_size // 2):
             # limit how often we're calculating positions
             xx = x * 2
             yy = y * 2
             # generate the grey value as a tuple
-            noiseVal = noise.getNoiseValue(x * .03, y * .03)
-            print(noiseVal);
-            greyStr = self.getGreyString(noiseVal)
+            greyStrNoise = self.getGreyString(noise.getNoiseValue(x * .03, y * .03))
+            greyStrChoir = self.getGreyString(noise.getChoirValue(x * .03, y * .03))
             # set four pixels
-            #_ = self.canvas.create_rectangle(xx, yy, xx + 1, yy + 1, fill = greyStr, outline = greyStr)
+            _ = self.canvas.create_rectangle(xx, yy, xx + 1, yy + 1, fill = greyStrNoise, outline = greyStrNoise)
+            _ = self.canvas.create_rectangle(self.half_display_size + xx, yy, self.half_display_size + xx + 1, yy + 1, fill = greyStrChoir, outline = greyStrChoir)
             
       # request screen update rather than waiting
       self.canvas.update_idletasks()
