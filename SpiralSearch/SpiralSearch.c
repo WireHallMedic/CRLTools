@@ -9,6 +9,18 @@ __declspec(dllexport) void initialize(long seed, int x, int y, int w, int h, int
 {
    if(searchableArr != NULL)
       freeAll();
+   
+   // set variables
+   width = w;
+   height = h;
+   searchableArr = (int **)malloc(sizeof(int[width][height]));
+   for(int xx = 0; xx < width; xx++)
+   for(int yy = 0; yy < height; yy++)
+      searchableArr[xx][yy] = 1;
+   
+   // set initial values
+   searchableArr[x][y] = FALSE;
+   addNeighbors(x, y);
 }
 
 void push(int x, int y)
