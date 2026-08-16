@@ -1,5 +1,7 @@
 #include<stdlib.h>
 
+#define FALSE 0
+
 struct SearchStep
 {
    int x;         
@@ -16,4 +18,4 @@ void freeAll();
 
 // export functions
 void initialize(long seed, int x, int y, int w, int h, int* map);
-void pop(int x, int y, int* returnVals);
+void pop(int* returnVals);

@@ -1,13 +1,14 @@
 #include "SpiralSearch.h"
 
-int **searchableArr;
+int **searchableArr = NULL;
 int width;
 int height;
 SearchStep *head;
 
 __declspec(dllexport) void initialize(long seed, int x, int y, int w, int h, int* map)
 {
-
+   if(searchableArr != NULL)
+      freeAll();
 }
 
 void push(int x, int y)
@@ -30,18 +31,23 @@ void push(int x, int y)
 
 void addNeighbors(int x, int y)
 {
-   // North
-   if(isInBounds(x, y - 1) && searchableArr[x][y - 1])
-      push(x, y - 1);
-   // South
-   if(isInBounds(x, y + 1) && searchableArr[x][y + 1])
-      push(x, y + 1);
-   // East
-   if(isInBounds(x + 1, y) && searchableArr[x + 1][y])
-      push(x + 1, y);
-   // West
-   if(isInBounds(x - 1, y) && searchableArr[x - 1][y])
-      push(x - 1, y);
+   for(int i = 0; i < 4; i++)
+   {
+      int localX = 0;
+      int localY = 0;
+      switch(i)
+      {
+         case 0 : localY = 1; break;
+         case 1 : localY = -1; break;
+         case 2 : localX = 1; break;
+         case 3 : localX = -1; break;
+      }
+      if(isInBounds(localX, localY) && searchableArr[localX][localY])
+      {
+         push(localX, localY);
+         searchableArr[localX][localY] = FALSE;
+      }
+   }
 }
 
 int isInBounds(int x, int y)
@@ -57,9 +63,14 @@ int cartesianToIndex(int x, int y)
    return x + (y * width);
 }
 
-__declspec(dllexport) void pop(int x, int y, int* returnVals)
+__declspec(dllexport) void pop(int* returnVals)
 {
-
+   // increment list
+   SearchStep* curStep = head;
+   head = head->next;
+   
+   // add neighbors to list
+   addNeighbors(curStep->x, curStep->y);
 }
 
 void freeAll()
@@ -75,5 +86,5 @@ void freeAll()
       curStep = nextStep;
    }
    
-   searchableArr = NULL;
+   free(searchableArr);
 }
