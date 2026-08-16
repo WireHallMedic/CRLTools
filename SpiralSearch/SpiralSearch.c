@@ -12,12 +12,36 @@ __declspec(dllexport) void initialize(long seed, int x, int y, int w, int h, int
 
 void push(int x, int y)
 {
-
+   SearchStep* newStep = (SearchStep *)malloc(sizeof(SearchStep));
+   newStep->x = x;
+   newStep->y = y;
+   newStep->next = NULL;
+   
+   if(head == NULL)
+      head = newStep;
+   else
+   {
+      SearchStep *last = head;
+      while(last->next != NULL)
+         last = last->next;
+      last->next = newStep;
+   }
 }
 
 void addNeighbors(int x, int y)
 {
-
+   // North
+   if(isInBounds(x, y - 1) && searchableArr[x][y - 1])
+      push(x, y - 1);
+   // South
+   if(isInBounds(x, y + 1) && searchableArr[x][y + 1])
+      push(x, y + 1);
+   // East
+   if(isInBounds(x + 1, y) && searchableArr[x + 1][y])
+      push(x + 1, y);
+   // West
+   if(isInBounds(x - 1, y) && searchableArr[x - 1][y])
+      push(x - 1, y);
 }
 
 int isInBounds(int x, int y)
