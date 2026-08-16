@@ -33,7 +33,7 @@ int cartesianToIndex(int x, int y)
    return x + (y * width);
 }
 
-void pop(int x, int y, int* returnVals)
+__declspec(dllexport) void pop(int x, int y, int* returnVals)
 {
 
 }
@@ -50,4 +50,6 @@ void freeAll()
       free(curStep);
       curStep = nextStep;
    }
+   
+   searchableArr = NULL;
 }
