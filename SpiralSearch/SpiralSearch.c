@@ -65,12 +65,35 @@ int cartesianToIndex(int x, int y)
 
 __declspec(dllexport) void pop(int* returnVals)
 {
+   // early exit if no list
+   if(head == NULL)
+   {
+      returnVals[0] = -1;
+      returnVals[1] = -1;
+      return;
+   }
+   
    // increment list
    SearchStep* curStep = head;
    head = head->next;
    
+   // early exit if out of tiles
+   if(curStep == NULL)
+   {
+      returnVals[0] = -1;
+      returnVals[1] = -1;
+      return;
+   }
+   
    // add neighbors to list
    addNeighbors(curStep->x, curStep->y);
+   
+   // set return values
+   returnVals[0] = curStep->x;
+   returnVals[1] = curStep->y;
+   
+   // free expired tile
+   free(curStep);
 }
 
 void freeAll()
