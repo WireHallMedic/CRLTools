@@ -45,14 +45,14 @@ void addNeighbors(int x, int y)
 {
    for(int i = 0; i < 4; i++)
    {
-      int localX = 0;
-      int localY = 0;
+      int localX = x;
+      int localY = y;
       switch(i)
       {
-         case 0 : localY = 1; break;
-         case 1 : localY = -1; break;
-         case 2 : localX = 1; break;
-         case 3 : localX = -1; break;
+         case 0 : localY += 1; break;
+         case 1 : localY -= 1; break;
+         case 2 : localX += 1; break;
+         case 3 : localX -= 1; break;
       }
       if(isInBounds(localX, localY) && searchableArr[cartesianToIndex(localX, localY)])
       {

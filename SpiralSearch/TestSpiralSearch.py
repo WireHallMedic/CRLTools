@@ -33,6 +33,9 @@ def print_arr(arr):
          outStr = outStr + arr[x + (y * width)]
       outStr = outStr + "\n"
    print(outStr + "\n")
+
+def cartesian_to_index(x, y):
+   return x + (y * width)
       
 
 print_arr(char_arr);
@@ -49,4 +52,14 @@ for i in range(len(char_arr)):
    else:
       cArr2d[i] = 1
 
-# spiral_search.initialize(startX, startY, width, height, cArr2d)
+print(f"Origin is {startX}, {startY}")
+
+spiral_search.initialize(startX, startY, width, height, cArr2d)
+
+for i in range(0, 5):
+   spiral_search.pop(cLoc)
+   print(f"Popped {cLoc[0]}, {cLoc[1]}")
+#    newChar = chr(ord('a') + i)
+#    index = cartesian_to_index(cLoc[0], cLoc[1])
+#    char_arr[index] = newChar
+#    print_arr(char_arr)
