@@ -3,6 +3,7 @@
 #ifndef ASTARDEFS_H
    #include "AStarDefs.h"
 #endif
+
 #include "AStarList.h"
 #include "AStarNode.h"
 
