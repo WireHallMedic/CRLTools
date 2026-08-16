@@ -16,7 +16,7 @@ __declspec(dllexport) void initialize(int xOrigin, int yOrigin, int w, int h, in
    searchableArr = (int *)malloc(sizeof(int[width * height]));
    for(int x = 0; x < width; x++)
    for(int y = 0; y < height; y++)
-      searchableArr[cartesianToIndex(x, y)] = 1;
+      searchableArr[cartesianToIndex(x, y)] = map[cartesianToIndex(x, y)];
    
    // set initial values
    searchableArr[cartesianToIndex(xOrigin, yOrigin)] = FALSE;
