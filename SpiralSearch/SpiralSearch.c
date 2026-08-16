@@ -1,11 +1,11 @@
 #include "SpiralSearch.h"
 
-int **searchableArr = NULL;
+int *searchableArr = NULL;
 int width;
 int height;
 SearchStep *head;
 
-__declspec(dllexport) void initialize(long seed, int x, int y, int w, int h, int* map)
+__declspec(dllexport) void initialize(int xOrigin, int yOrigin, int w, int h, int* map)
 {
    if(searchableArr != NULL)
       freeAll();
@@ -13,14 +13,14 @@ __declspec(dllexport) void initialize(long seed, int x, int y, int w, int h, int
    // set variables
    width = w;
    height = h;
-   searchableArr = (int **)malloc(sizeof(int[width][height]));
-   for(int xx = 0; xx < width; xx++)
-   for(int yy = 0; yy < height; yy++)
-      searchableArr[xx][yy] = 1;
+   searchableArr = (int *)malloc(sizeof(int[width * height]));
+   for(int x = 0; x < width; x++)
+   for(int y = 0; y < height; y++)
+      searchableArr[cartesianToIndex(x, y)] = 1;
    
    // set initial values
-   searchableArr[x][y] = FALSE;
-   addNeighbors(x, y);
+   searchableArr[cartesianToIndex(xOrigin, yOrigin)] = FALSE;
+   addNeighbors(xOrigin, yOrigin);
 }
 
 void push(int x, int y)
@@ -54,10 +54,10 @@ void addNeighbors(int x, int y)
          case 2 : localX = 1; break;
          case 3 : localX = -1; break;
       }
-      if(isInBounds(localX, localY) && searchableArr[localX][localY])
+      if(isInBounds(localX, localY) && searchableArr[cartesianToIndex(localX, localY)])
       {
          push(localX, localY);
-         searchableArr[localX][localY] = FALSE;
+         searchableArr[cartesianToIndex(localX, localY)] = FALSE;
       }
    }
 }

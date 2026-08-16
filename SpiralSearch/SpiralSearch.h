@@ -17,5 +17,5 @@ int cartesianToIndex(int x, int y);
 void freeAll();
 
 // export functions
-void initialize(long seed, int x, int y, int w, int h, int* map);
+void initialize(int x, int y, int w, int h, int* map);
 void pop(int* returnVals);

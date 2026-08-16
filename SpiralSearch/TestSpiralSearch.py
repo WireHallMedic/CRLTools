@@ -5,45 +5,48 @@ import math
 
 spiral_search = cdll.LoadLibrary("./SpiralSearch.dll")
 
+spiral_search.initialize.argtypes = [c_int, c_int, c_int, c_int, POINTER(c_int)]
+spiral_search.pop.argtypes = [POINTER(c_int)]
 
-def print_char_list(char_list):
-   for y in range(width):
-      for x in range(width):
-         print("" + char_arr[x][y])
-      print()
 
 char_arr = [
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '@', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '#', '.', '.', '.', '.'], 
-         ['.', '.', '.', '.', '.', '.', '.', '.']]
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '@', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '#', '.', '.', '.', '.', 
+         '.', '.', '.', '.', '.', '.', '.', '.']
          
 startX = -1;
 startY = -1;
-width = len(char_arr);
-height = len(char_arr[1]);
+width = 8;
+height = 10;
 
-# in_arr = (c_double * list_len)(*double_list)
-# out_arr = (c_short * 64)()
-# 
-# a_star.findPath.argtypes = [POINTER(c_double), c_int, c_int, c_int, c_int, c_int, POINTER(c_short)]
-# 
-# a_star.findPath(in_arr, width, startX, startY, endX, endY, out_arr)
-# 
-# xLoc = startX
-# yLoc = startY
-# 
-# i = 0
-# while(out_arr[i] != 0):
-#    xLoc += getXStep(out_arr[i])
-#    yLoc += getYStep(out_arr[i])
-#    char_list[getIndex(xLoc, yLoc, width)] = 'X'
-#    i += 1
-# 
-# print_char_list(char_list, width)
+def print_arr(arr):
+   outStr = ""
+   for y in range(height):
+      for x in range(width):
+         outStr = outStr + arr[x + (y * width)]
+      outStr = outStr + "\n"
+   print(outStr + "\n")
+      
+
+print_arr(char_arr);
+
+cArr2d = (c_int * (height * width))()
+cLoc = (c_int * 2)()
+
+for i in range(len(char_arr)):
+   if(char_arr[i] == '#'):
+      cArr2d[i] = 0
+   elif(char_arr[i] == '@'):
+      startX = i % width
+      startY = i // width
+   else:
+      cArr2d[i] = 1
+
+# spiral_search.initialize(startX, startY, width, height, cArr2d)
